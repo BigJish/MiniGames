@@ -3,7 +3,7 @@ from PlayerPlane import *
 from rocket import *
 from time import time as t
 from EnemyPlane import *
-from text import *
+from Text import *
 from Boom import *
 from Enemy_Rocket import *
 from Game1_Game_Over import *
@@ -25,7 +25,7 @@ class Aerial:
         self.collisions = []
         self.explosions = []
         
-        self.text = Text()
+        self.text = text()
         self.GameOver = game_over()
         self.title = game1_title()
         
@@ -121,7 +121,7 @@ class Aerial:
                     self.enemy_rocket_sprites = sprite.Group()
                     self.screen = display.get_surface()
                     self.key_held = False
-                    self.text = Text()
+                    self.text = text()
                     self.GameOver = game_over()
                     self.score = 0
                     self.rocket_cooldown = 99999
@@ -141,7 +141,7 @@ class Aerial:
                     self.enemy_rocket_sprites = sprite.Group()
                     self.screen = display.get_surface()
                     self.key_held = False
-                    self.text = Text()
+                    self.text = text()
                     self.GameOver = game_over()
                     self.score = 0
                     self.rocket_cooldown = 99999

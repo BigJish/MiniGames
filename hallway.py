@@ -1,11 +1,9 @@
-from pygame import *
+from settings import *
 from player import Player
 from Background import bg
 from portal import Portal
 from Player_Name import player_name
-from text import *
 from Hallway_Menu import *
-import json
 
 class Hallway:
     def __init__(self,user):
@@ -54,8 +52,7 @@ class Hallway:
             if self.menu.draw() == 1:
                 self.screen_num = 1
             if self.menu.draw() == 2:
-                quit()
-                login_tk.window().run()
+                return "logout"
             if self.menu.draw() == 3:
                 quit()
         
@@ -65,7 +62,7 @@ class Hallway:
         f.close()
         stars = users[self.user][1]["Total Stars"]
         self.screen.blit(self.star_img, (50,15))
-        self.text.txt("= "+str(stars), 24, (255,255,255), (150,50))
+        self.text.txt2("= "+str(stars), 24, (255,255,255), (80,50))
             
     def minigame(self):
         if self.x == 1:

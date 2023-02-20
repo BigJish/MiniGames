@@ -1,10 +1,7 @@
 from login_tk import *
-window().run()
-user = get_username()
-
 from pygame import *
 from settings import *
-from title import *
+from Title import *
 from Game1 import *
 from Game3 import *
 from Game2 import *
@@ -13,20 +10,26 @@ from hallway import *
 
 
 class Game:
-    def __init__(self,user):
-        init()
-        self.user = user
-#         self.screen  = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.screen  = display.set_mode((0, 0), RESIZABLE)
-        self.end = False
-        self.title = Title_Screen(user)
-        self.screen_num = 1
-        self.game1 = Aerial()
-        self.game2 = Platformer()
-        self.game3 = Maze()
-        self.game4 = game4()
-        self.hallway = Hallway(user)
-        self.clock = time.Clock()
+    def __init__(self):
+        self.user = TkRun()
+        if self.user != "":
+            init()
+            self.screen  = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+            # self.win  = display.set_mode((0, 0), RESIZABLE)
+            self.clock = time.Clock()
+
+            self.end = False
+            self.logout = False
+            self.screen = 1
+
+            self.title = Title_Screen(self.user)
+            self.hallway = Hallway(self.user)
+            self.game1 = Aerial()
+            self.game2 = Platformer()
+            self.game3 = Maze()
+            self.game4 = game4()
+
+            self.run()
 
     def run(self):
         while self.end == False:   
@@ -34,51 +37,58 @@ class Game:
                 if e.type == QUIT:
                     self.end = True
                     
-            if self.screen_num == 1:
+            if self.screen == 1:
                 if self.title.run() == True:
-                    self.screen_num = 2
+                    self.screen = 2
             
-            elif self.screen_num == 2:
-                self.hallway.run()
+            elif self.screen == 2:
+                val = self.hallway.run()
+
+                if val == "logout":
+                    self.end = True
+                    self.logout = True
+
                 if self.hallway.minigame() == 1:
-                    self.screen_num = 3
+                    self.screen = 3
                     
                 if self.hallway.minigame() == 2:
-                    self.screen_num = 4
+                    self.screen = 4
                     
                 if self.hallway.minigame() == 3:
-                    self.screen_num = 5
+                    self.screen = 5
                     
                 if self.hallway.minigame() == 4:
-                    self.screen_num = 6
+                    self.screen = 6
             
-            elif self.screen_num == 3:
+            elif self.screen == 3:
                 if self.game1.run(self.user) == True:
-                    self.screen_num = 2
+                    self.screen = 2
                     
-            elif self.screen_num == 4:
+            elif self.screen == 4:
                 val = self.game2.run(self.user)
                 
                 if  val == "exit":
                     self.game2 = Platformer()
-                    self.screen_num = 2
+                    self.screen = 2
 
                 if val == "reset":
                     self.game2 = Platformer()
                     
-            elif self.screen_num == 5:
+            elif self.screen == 5:
                 if self.game3.run() == True:
-                    self.screen_num = 2
+                    self.screen = 2
                     
-            elif self.screen_num == 6:
+            elif self.screen == 6:
                 if self.game4.run() == True:
-                    self.screen_num = 2
+                    self.screen = 2
                 
             self.clock.tick(60)
             display.flip()
         
         quit()
+        if self.logout == True:
+            game = Game()
+            game.run()
 
 if __name__ == '__main__':
-    game = Game(user)
-    game.run()
+    game = Game()

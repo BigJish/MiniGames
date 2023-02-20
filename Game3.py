@@ -1,11 +1,11 @@
 from pygame import *
-from text import *
+from Text import *
 from Game3_Game import *
 
 class Maze:
     def __init__(self):
         self.screen = display.get_surface()
-        self.text = Text()
+        self.text = text()
         self.AmMaze = AmMaze()
         self.scrn = 1
         
@@ -22,7 +22,7 @@ class Maze:
                 
         elif self.scrn == 2:
             if self.AmMaze.run() == True:
-                self.text = Text()
+                self.text = text()
                 self.AmMaze = AmMaze()
                 self.scrn = 1
                 return True

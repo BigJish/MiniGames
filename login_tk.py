@@ -1,10 +1,9 @@
 from tkinter import *
 import json
 
-user = ""
-
 class window:
     def __init__(self):
+        self.user = ""
         self.win = Tk()
         self.win.title('Login')
         self.win.geometry("500x300")
@@ -15,6 +14,10 @@ class window:
             
     def stop(self):
         self.win.destroy()
+    
+    def run(self):
+        self.win1()
+        self.win.mainloop()
     
     def check(self, username, password, w):
 
@@ -84,9 +87,8 @@ class window:
             l1.grid(row = 3, column = 1)
     
     def load(self, usr):
-        global user
         self.stop()
-        user = usr
+        self.user = usr
     
     def win1(self):
         
@@ -99,7 +101,7 @@ class window:
 
         l1 = Label(self.win, text = "Welcome!")
         b1 = Button(self.win, text = "Sign up", command = lambda:[self.signUpWin(), self.remove(w)])
-        b2 = Button(self.win, text = "Login", command = lambda:[self.loginWin(), self.remove(w)])
+        b2 = Button(self.win, text = " Login ", command = lambda:[self.loginWin(), self.remove(w)])
         
         w.append(l1)
         w.append(b1)
@@ -149,7 +151,7 @@ class window:
         
         Font = (None, 24)
         l1.configure(font = Font)
-#         self.win.bind('<Return>', lambda:[self.check(e1.get(),e2.get())])
+        self.win.bind('<Return>', lambda event:self.check(e1.get(),e2.get(),w))
     
     def signUpWin(self):
         
@@ -188,14 +190,9 @@ class window:
         
         Font = (None, 24)
         l1.configure(font = Font)
-#         self.win.bind('<Return>', lambda:[self.add(e1.get(),e2.get(), w)])
+        # self.win.bind('<Return>', lambda:[self.add(e1.get(),e2.get(), w)])
 
-    def run(self):
-        self.win1()
-        self.win.mainloop()
-        
-def get_username():
-    return user
-
-# if __name__ == '__main__': 
-#     window().run()
+def TkRun():
+    TkWin = window()
+    TkWin.run()
+    return TkWin.user

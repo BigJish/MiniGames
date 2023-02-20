@@ -1,5 +1,5 @@
 from pygame import *
-from text import *
+from Text import *
 import json
 from time import time as t
 
@@ -20,7 +20,6 @@ class Portal(sprite.Sprite):
         self.empty_star_img = image.load('Empty_Star.png').convert_alpha()
         
         self.user = user
-        self.text = Text()
         self.txt_hitbox = self.rect.inflate(0,20)
         self.game = game
         self.clicked = False
@@ -31,6 +30,12 @@ class Portal(sprite.Sprite):
         users = json.load(f)
         f.close()
         self.status = users[self.user][2]["Games"][self.game]["Status"]
+
+        self.text = [
+            text("Press E To Enter!", 32, 500, 400, 1),
+            text("Press E To Unlock!", 32, 500, 400, 1),
+            text("Press E To Enter!", 32, 500, 400, 1)
+        ]
     
     def enter(self, player):
         k = key.get_pressed()

@@ -1,5 +1,5 @@
 from pygame import *
-from text import *
+from Text import *
 from time import time as t
 from random import randint as r
 import json

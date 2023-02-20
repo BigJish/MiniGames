@@ -1,6 +1,6 @@
 from pygame import *
 from sprite_sheet import SpriteSheet
-from text import *
+from Text import *
 
 class Player(sprite.Sprite):
     def __init__(self, pos, groups, obsticles, user):
@@ -20,7 +20,6 @@ class Player(sprite.Sprite):
         self.hitbox = self.rect.inflate(-60, -70)
         self.direction = math.Vector2()
         self.speed = 4
-        self.text = Text()
         self.user = user
  
     def inputs(self):

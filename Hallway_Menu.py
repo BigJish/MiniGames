@@ -7,6 +7,7 @@ class menu:
         self.b1 = button((375,150), 250, 50, (120,120,120), "Resume", (0,0,0), 24)
         self.b2 = button((375,300), 250, 50, (120,120,120), "Logout", (0,0,0), 24)
         self.b3 = button((375,450), 250, 50, (120,120,120), "Quit", (0,0,0), 24)
+        
     def draw(self):
         if  self.b1.update() == True:
             return 1

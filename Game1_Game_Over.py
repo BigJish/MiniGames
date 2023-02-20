@@ -1,5 +1,5 @@
 from pygame import *
-from text import *
+from Text import *
 import json
 
 class game_over:
@@ -7,7 +7,7 @@ class game_over:
         self.screen = display.get_surface()
         self.star_img = image.load('Star.png').convert_alpha()
         self.empty_star_img = image.load('Empty_Star.png').convert_alpha()
-        self.text = Text()
+        self.text = text()
         self.star_num = 0
     
     def display(self, score, user):
