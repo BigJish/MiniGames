@@ -4,7 +4,7 @@ class game1_title:
     def __init__(self):
         self.screen = display.get_surface()
         self.bg_img = image.load('Game1_bg.jpg').convert_alpha()
-        self.text = Text()
+        
         
     def run(self, user):
         self.screen.blit(self.bg_img,(0,0))

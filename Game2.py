@@ -11,7 +11,7 @@ class Platformer:
         self.visible_sprites = sprite.Group()
         self.obsicle_sprites = sprite.Group()
         self.title = Title()
-        self.text = Text()
+        
         self.game_over = Game_over()
         self.player = Player(self.visible_sprites, (500,400), self.obsicle_sprites)
         self.screen = 1

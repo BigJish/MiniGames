@@ -5,7 +5,6 @@ class player_name:
     def __init__(self, pos, groups, user):
         self.screen = display.get_surface()
         self.pos = pos
-        user
         font1 = font.Font("PressStart2P-Regular.ttf",24)
         self.image = font1.render(user, True, (255,255,255))
         

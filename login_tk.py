@@ -190,7 +190,7 @@ class window:
         
         Font = (None, 24)
         l1.configure(font = Font)
-        # self.win.bind('<Return>', lambda:[self.add(e1.get(),e2.get(), w)])
+        self.win.bind('<Return>', lambda event:self.add(e1.get(),e2.get(), w))
 
 def TkRun():
     TkWin = window()

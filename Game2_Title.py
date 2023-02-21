@@ -3,7 +3,7 @@ from settings import *
 class Title:
     def __init__(self):
         self.win = display.get_surface()
-        self.text = Text()
+        
 
     def run(self,user):
         self.win.fill((100,120,255))

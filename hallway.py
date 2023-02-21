@@ -4,18 +4,19 @@ from Background import bg
 from portal import Portal
 from Player_Name import player_name
 from Hallway_Menu import *
+from TextFile import *
 
 class Hallway:
     def __init__(self,user):
         self.visible_sprites = Camera()
         self.obsticle_sprites = sprite.Group()
         self.screen = display.get_surface()
-        self.setup(user)
         self.user = user
-        self.text = Text()
         self.screen_num = 1
         self.menu = menu()
+        self.textFile = database(user)
         self.star_img = image.load('Star.png').convert_alpha()
+        self.setup(user)
     
     def setup(self, user):
         self.bg = bg((0,-200), [self.visible_sprites])
@@ -26,6 +27,7 @@ class Hallway:
         ]
         self.player = Player((200,200), self.visible_sprites, self.obsticle_sprites, user)
         self.playername = player_name((500,220), self.visible_sprites, user)
+        self.text = text("= "+str(self.textFile.get_stars()), 24, 120, 20, 0)
                 
     def run(self):
         if self.screen_num == 1:
@@ -46,7 +48,8 @@ class Hallway:
             self.visible_sprites.update()
             self.playername.update()
             
-            self.total_stars()
+            self.screen.blit(self.star_img, (50,15))
+            self.text.text_update("= "+str(self.textFile.get_stars()))
             
         elif self.screen_num == 2:
             if self.menu.draw() == 1:
@@ -55,14 +58,6 @@ class Hallway:
                 return "logout"
             if self.menu.draw() == 3:
                 quit()
-        
-    def total_stars(self):
-        f = open("Users.txt","r")
-        users = json.load(f)
-        f.close()
-        stars = users[self.user][1]["Total Stars"]
-        self.screen.blit(self.star_img, (50,15))
-        self.text.txt2("= "+str(stars), 24, (255,255,255), (80,50))
             
     def minigame(self):
         if self.x == 1:

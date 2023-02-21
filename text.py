@@ -5,8 +5,8 @@ class text:
     def __init__(self, displayText, textSize, x, y, displayType):
         self.win = display.get_surface()
 
-        textFont = font.Font("PressStart2P-Regular.ttf",textSize)
-        self.text = textFont.render(displayText, True, (0,0,0))
+        self.textFont = font.Font("PressStart2P-Regular.ttf",textSize)
+        self.text = self.textFont.render(displayText, True, (0,0,0))
         self.x = x
         self.y = y
         self.type = displayType
@@ -15,6 +15,11 @@ class text:
     
     def draw(self):
         self.win.blit(self.text,(self.x, self.y))
+    
+    def text_update(self,text):
+        self.text = self.textFont.render(text, True, (0,0,0))
+        self.pos_config()
+        self.draw()
 
     def pos_config(self):
         if self.type == 1:

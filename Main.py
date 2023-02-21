@@ -12,6 +12,7 @@ from hallway import *
 class Game:
     def __init__(self):
         self.user = TkRun()
+        self.end = True
         if self.user != "":
             init()
             self.screen  = display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))

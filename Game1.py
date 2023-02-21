@@ -25,7 +25,6 @@ class Aerial:
         self.collisions = []
         self.explosions = []
         
-        self.text = text()
         self.GameOver = game_over()
         self.title = game1_title()
         

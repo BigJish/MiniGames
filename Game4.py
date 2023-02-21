@@ -4,7 +4,7 @@ from Text import *
 class game4:
     def __init__(self):
         self.screen = display.get_surface()
-        self.text = text()
+        
         
     def run(self):
         self.screen.fill((60,60,60))
