@@ -25,7 +25,7 @@ class Game:
 
             self.title = Title_Screen(self.user)
             self.hallway = Hallway(self.user)
-            self.game1 = Aerial()
+            self.game1 = Aerial(self.user)
             self.game2 = Platformer()
             self.game3 = Maze()
             self.game4 = game4()
@@ -62,9 +62,15 @@ class Game:
                     self.screen = 6
             
             elif self.screen == 3:
-                if self.game1.run(self.user) == True:
+                val = self.game1.run(self.user)
+
+                if self.game1.run(self.user) == "exit":
+                    self.game1 = Aerial(self.user)
                     self.screen = 2
-                    
+                
+                if self.game1.run(self.user) == "reset":
+                     self.game1 = Aerial(self.user)
+                     
             elif self.screen == 4:
                 val = self.game2.run(self.user)
                 

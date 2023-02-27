@@ -34,21 +34,20 @@ class Portal(sprite.Sprite):
         self.text = [
             text("Press E To Enter!", 32, 500, 400, 1),
             text("Press E To Unlock!", 32, 500, 400, 1),
-            text("Press E To Enter!", 32, 500, 400, 1)
         ]
     
     def enter(self, player):
         k = key.get_pressed()
         if player.hitbox.colliderect(self.txt_hitbox) and self.status == True:
             self.star_num()
-            self.text.txt("Press E To Enter!", 32, (255,255,255), (500, 400))
+            self.text[0].draw()
             if k[K_e]:
                 return True
             else:
                 return False
             
         elif player.hitbox.colliderect(self.txt_hitbox) and self.status == False:
-            self.text.txt("Press E To Unlock!", 32, (255,255,255), (500, 400))
+            self.text[1].draw()
             f = open("Users.txt","r")
             users = json.load(f)
             f.close()

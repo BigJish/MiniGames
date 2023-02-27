@@ -1,23 +1,21 @@
 from settings import *
+from TextFile import *
 
 class game1_title:
-    def __init__(self):
+    def __init__(self, user):
         self.screen = display.get_surface()
         self.bg_img = image.load('Game1_bg.jpg').convert_alpha()
+        self.textFile = database(user)
+        self.text = [
+            text("Sky Raiders!", 64, 500, 180, 1),
+            text("Your highscore is "+str(self.textFile.get_game_data("Highscore")), 64, 500, 300, 1),
+            text("Press enter to start", 36, 500, 420, 1)
+        ]
         
-        
-    def run(self, user):
+    def run(self):
         self.screen.blit(self.bg_img,(0,0))
-        self.text.txt("Sky Raiders!", 64, (0,0,0), (500, 180))
-        self.text.txt("Your highscore is "+str(self.get_score(user)), 32, (0,0,0), (500, 300))
-        self.text.txt("Press enter to start", 36, (0,0,0), (500, 420))
+        for i in self.text:
+            i.draw()
         k = key.get_pressed()
         if k[K_RETURN]:
             return True
-        
-    def get_score(self, user):
-        f = open("Users.txt","r")
-        users = json.load(f)
-        f.close()
-        score = users[user][2]["Games"]["Game1"]["Highscore"]
-        return score
