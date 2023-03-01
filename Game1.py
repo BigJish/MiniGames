@@ -1,17 +1,18 @@
-from pygame import *
+from settings import *
+
+from Game1_Title import *
+from Game1_Game_Over import *
+
 from PlayerPlane import *
 from rocket import *
-from time import time as t
-from EnemyPlane import *
-from Text import *
-from Boom import *
-from Enemy_Rocket import *
-from Game1_Game_Over import *
-from Game1_Title import *
 
+from EnemyPlane import *
+from Enemy_Rocket import *
+
+from Boom import *
 
 class Aerial:
-    def __init__(self):
+    def __init__(self, user):
         self.screen = display.get_surface()
         
         self.visible_sprites = sprite.Group()
@@ -21,12 +22,13 @@ class Aerial:
         self.enemy_rocket_sprites = sprite.Group()
         
         self.bg_img = image.load('Game1_bg.jpg').convert_alpha()
+        self.user = user
         
         self.collisions = []
         self.explosions = []
         
         self.GameOver = game_over()
-        self.title = game1_title()
+        self.title = game1_title(user)
         
         self.score = 0
         self.rocket_cooldown = 99999
@@ -35,23 +37,24 @@ class Aerial:
         self.cooldown = 2
         self.dead = False
         self.key_held = False
-        
         self.scrn_num = 1
         
+        self.text = text(str(self.score), 128, 150, 300, 1)
+
         self.setup()
         
     def setup(self):
         self.player = Player((200,300),self.visible_sprites)
     
-    def run(self, user):
+    def run(self):
         if self.scrn_num == 1:
-            if self.title.run(user) == True:
+            if self.title.run() == True:
                 self.scrn_num = 2
             
         if self.scrn_num == 2:
             if self.dead == False:
                 self.screen.blit(self.bg_img,(0,0))
-                self.text.txt(str(self.score), 128,(0,0,0), (150, 300))
+                self.text.update(str(self.score))
                 if self.player.shoot() == True:
                     if self.key_held == False:
                         if t() - self.rocket_cooldown >= 0.5:
@@ -110,48 +113,10 @@ class Aerial:
                     self.key_held = False
                     
             if self.dead == True:
-                self.GameOver.display(self.score, user)
-                
+                val = self.GameOver.display(self.score, self.user)
+
                 if self.GameOver.retry() == True:
-                    self.visible_sprites = sprite.Group()
-                    self.enemy_sprites = sprite.Group()
-                    self.rocket_sprites = sprite.Group()
-                    self.obstcale_sprites = sprite.Group()
-                    self.enemy_rocket_sprites = sprite.Group()
-                    self.screen = display.get_surface()
-                    self.key_held = False
-                    self.text = text()
-                    self.GameOver = game_over()
-                    self.score = 0
-                    self.rocket_cooldown = 99999
-                    self.setup()
-                    self.collisions = []
-                    self.explosions = []
-                    self.enemy_cooldown = 0
-                    self.cooldown = 2
-                    self.dead = False
-                    self.scrn_num = 1
+                    return "reset"
                     
                 if self.GameOver.leave() == True:
-                    self.visible_sprites = sprite.Group()
-                    self.enemy_sprites = sprite.Group()
-                    self.rocket_sprites = sprite.Group()
-                    self.obstcale_sprites = sprite.Group()
-                    self.enemy_rocket_sprites = sprite.Group()
-                    self.screen = display.get_surface()
-                    self.key_held = False
-                    self.text = text()
-                    self.GameOver = game_over()
-                    self.score = 0
-                    self.rocket_cooldown = 99999
-                    self.setup()
-                    self.collisions = []
-                    self.explosions = []
-                    self.enemy_cooldown = 0
-                    self.cooldown = 2
-                    self.dead = False
-                    self.scrn_num = 1
-                    
-                    return True
-                else:
-                    return False
+                    return "exit"

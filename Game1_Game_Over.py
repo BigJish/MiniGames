@@ -1,6 +1,4 @@
-from pygame import *
-from Text import *
-import json
+from settings import *
 
 class game_over:
     def __init__(self):

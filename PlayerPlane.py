@@ -5,19 +5,11 @@ class Player(sprite.Sprite):
     def __init__(self,pos,groups):
         super().__init__(groups)
         self.screen = display.get_surface()
-        try:
-            player_image = image.load(r"D:\Downloads\Thonny\Programs\Computer Science NEA\Jet.png").convert_alpha()
-            
 
-        except:
-            player_image = image.load("Jet.png").convert_alpha()
-            
-            
-        img = SpriteSheet(player_image)
-        self.player_image = img.get_image(0, 602, 605, 0.15, (0, 0, 0))
-
+        self.player_image = image.load("PlayerPlane.png").convert_alpha()
         self.rect = self.player_image.get_rect(center = (pos))
-        self.hitbox = self.rect
+
+        self.hitbox = self.rect.inflate(0, -40)
         self.rocket_count = 0
     
     def inputs(self):
@@ -27,16 +19,16 @@ class Player(sprite.Sprite):
         self.Y_change = 0
 
         if k[K_w]:
-            self.Y_change += -3
+            self.Y_change += -2
 
         if k[K_s]:
-            self.Y_change += 3
+            self.Y_change += 2
 
         if k[K_a]:
-            self.X_change += -3
+            self.X_change += -1
 
         if k[K_d]:
-            self.X_change += 3
+            self.X_change += 1
     
     def move(self):
         if self.rect.x+self.X_change <= 360 and self.rect.x+self.X_change >= 0:

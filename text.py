@@ -16,6 +16,11 @@ class text:
     def draw(self):
         self.win.blit(self.text,(self.x, self.y))
     
+    def update(self, text):
+        self.text = self.textFont.render(text, True, (0,0,0))
+        self.pos_config()
+        self.draw()
+    
     def text_update(self,text):
         self.text = self.textFont.render(text, True, (0,0,0))
         self.pos_config()

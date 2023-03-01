@@ -8,7 +8,7 @@ class game1_title:
         self.textFile = database(user)
         self.text = [
             text("Sky Raiders!", 64, 500, 180, 1),
-            text("Your highscore is "+str(self.textFile.get_game_data("Highscore")), 64, 500, 300, 1),
+            text("Your highscore is "+str(self.textFile.get_game_data("Highscore")[0]), 36, 500, 300, 1),
             text("Press enter to start", 36, 500, 420, 1)
         ]
         

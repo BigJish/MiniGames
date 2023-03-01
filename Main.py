@@ -62,13 +62,13 @@ class Game:
                     self.screen = 6
             
             elif self.screen == 3:
-                val = self.game1.run(self.user)
+                val = self.game1.run()
 
-                if self.game1.run(self.user) == "exit":
+                if self.game1.run() == "exit":
                     self.game1 = Aerial(self.user)
                     self.screen = 2
                 
-                if self.game1.run(self.user) == "reset":
+                if self.game1.run() == "reset":
                      self.game1 = Aerial(self.user)
                      
             elif self.screen == 4:
@@ -89,7 +89,7 @@ class Game:
                 if self.game4.run() == True:
                     self.screen = 2
                 
-            self.clock.tick(60)
+            self.clock.tick(FPS)
             display.flip()
         
         quit()
