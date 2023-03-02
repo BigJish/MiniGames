@@ -1,22 +1,38 @@
 from settings import *
+from Button import *
 
 class game_over:
-    def __init__(self):
+    def __init__(self, score):
         self.screen = display.get_surface()
         self.star_img = image.load('Star.png').convert_alpha()
         self.empty_star_img = image.load('Empty_Star.png').convert_alpha()
-        
         self.star_num = 0
-    
-    def display(self, score, user):
-        self.screen.fill((20,20,20))
-        self.text.txt("Game Over!", 72, (255,255,255), (500,150))
-        self.stars(score)
-        self.text.txt("Your Score was "+str(score), 48, (255,255,255), (500,350))
-        self.text.txt("Press r To Play Agian", 32, (255,255,255), (500,450))
-        self.text.txt("Press enter To Quit", 32, (255,255,255), (500,550))
+        self.score = score
+
+        self.text = [
+            text("Game Over!", 72, 500, 150, 1),
+            text("Your Score Was "+str(score), 48, 500, 380, 1),
+        ]
         
-        self.update_score(score, user)
+        self.buttons = [
+            button("Retry", 32, 300, 500, "retry"),
+            button("Leave", 32, 700, 500, "leave")
+        ]
+    
+    def display(self, user):
+        self.screen.fill((50,50,50))
+        
+        for i in self.text:
+            i.draw()
+
+        for i in self.buttons:
+            val = i.update()
+            if val != False:
+                return val
+        
+        self.stars(self.score)
+        
+        self.update_score(self.score, user)
         self.update_stars(user)
         
     def stars(self, score):

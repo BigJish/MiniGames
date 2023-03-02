@@ -6,11 +6,10 @@ from time import time as t
 class Enemy(sprite.Sprite):
     def __init__(self,groups, rockets):
         super().__init__(groups)
-        self.screen = display.get_surface()
+        self.win = display.get_surface()
         self.enemy_image = image.load("Enemy_Plane.png").convert_alpha()
-
         self.rect = self.enemy_image.get_rect(center = (1100,0))
-        self.hitbox = self.rect
+        self.hitbox = self.rect.inflate(0,-12)
         self.x = r(600,900)
         self.y = r(0,500)
         self.rockets = rockets
@@ -33,5 +32,7 @@ class Enemy(sprite.Sprite):
             return True
             
     def update(self):
-        self.screen.blit(self.enemy_image,self.rect.topleft)
+        self.win.blit(self.enemy_image,self.rect.topleft)
+        self.hitbox = self.rect.inflate(0,-12)
+        draw.rect(self.win, (200,80,20), self.hitbox, 2)
         self.spawn(self.x, self.y)

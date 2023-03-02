@@ -27,7 +27,7 @@ class Hallway:
         ]
         self.player = Player((200,200), self.visible_sprites, self.obsticle_sprites, user)
         self.playername = player_name((500,220), self.visible_sprites, user)
-        self.text = text("= "+str(self.textFile.get_stars()), 24, 120, 20, 0)
+        self.text = text("= "+str(self.textFile.get_stars()), 32, 120, 40, 0)
                 
     def run(self):
         if self.screen_num == 1:

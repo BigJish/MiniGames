@@ -11,7 +11,8 @@ from hallway import *
 
 class Game:
     def __init__(self):
-        self.user = TkRun()
+        # self.user = TkRun()
+        self.user = "Josh"
         self.end = True
         if self.user != "":
             init()
@@ -21,7 +22,7 @@ class Game:
 
             self.end = False
             self.logout = False
-            self.screen = 1
+            self.screen = 3
 
             self.title = Title_Screen(self.user)
             self.hallway = Hallway(self.user)
@@ -64,11 +65,11 @@ class Game:
             elif self.screen == 3:
                 val = self.game1.run()
 
-                if self.game1.run() == "exit":
+                if val == "exit":
                     self.game1 = Aerial(self.user)
                     self.screen = 2
-                
-                if self.game1.run() == "reset":
+
+                if val== "reset":
                      self.game1 = Aerial(self.user)
                      
             elif self.screen == 4:

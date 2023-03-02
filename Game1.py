@@ -8,6 +8,7 @@ from rocket import *
 
 from EnemyPlane import *
 from Enemy_Rocket import *
+from Game1_Spawning_Algorithm import *
 
 from Boom import *
 
@@ -26,8 +27,7 @@ class Aerial:
         
         self.collisions = []
         self.explosions = []
-        
-        self.GameOver = game_over()
+
         self.title = game1_title(user)
         
         self.score = 0
@@ -39,12 +39,13 @@ class Aerial:
         self.key_held = False
         self.scrn_num = 1
         
-        self.text = text(str(self.score), 128, 150, 300, 1)
+        self.text = text(str(self.score), 64, 500, 100, 1)
 
         self.setup()
         
     def setup(self):
         self.player = Player((200,300),self.visible_sprites)
+        self.spawn = EnemySpawning()
     
     def run(self):
         if self.scrn_num == 1:
@@ -54,7 +55,13 @@ class Aerial:
         if self.scrn_num == 2:
             if self.dead == False:
                 self.screen.blit(self.bg_img,(0,0))
-                self.text.update(str(self.score))
+                self.text.text_update(""+str(self.score))
+
+                val = self.spawn.spawn()
+                if val == "spawn":
+                    Enemy([self.visible_sprites, self.enemy_sprites, self.obstcale_sprites], self.rocket_sprites)
+
+
                 if self.player.shoot() == True:
                     if self.key_held == False:
                         if t() - self.rocket_cooldown >= 0.5:
@@ -66,10 +73,10 @@ class Aerial:
                     if i.shoot() == True:
                         enemy_rocket((i.rect.x, i.rect.y+25), [self.visible_sprites, self.enemy_rocket_sprites])
                     
-                if t() - self.enemy_cooldown >= self.cooldown:
-                    self.enemy_cooldown = t()
-                    self.cooldown *= self.difficulty_factor
-                    Enemy([self.visible_sprites, self.enemy_sprites, self.obstcale_sprites], self.rocket_sprites)
+                # if t() - self.enemy_cooldown >= self.cooldown:
+                #     self.enemy_cooldown = t()
+                #     self.cooldown *= self.difficulty_factor
+                #     Enemy([self.visible_sprites, self.enemy_sprites, self.obstcale_sprites], self.rocket_sprites)
                     
                 
                 for i in self.obstcale_sprites:
@@ -104,6 +111,7 @@ class Aerial:
                     if i.collide(self.player) == True:
                         self.visible_sprites.remove(self.player)
                         self.explosions.append(Pow(self.player.rect.center, self.visible_sprites))
+                        self.GameOver = game_over(self.score)
                         self.dead = True
                         
                 for i in self.visible_sprites:
@@ -113,10 +121,10 @@ class Aerial:
                     self.key_held = False
                     
             if self.dead == True:
-                val = self.GameOver.display(self.score, self.user)
+                val = self.GameOver.display(self.user)
 
-                if self.GameOver.retry() == True:
+                if val == "retry":
                     return "reset"
                     
-                if self.GameOver.leave() == True:
+                if val == "leave":
                     return "exit"
