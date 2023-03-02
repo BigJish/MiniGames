@@ -7,6 +7,7 @@ from Game3 import *
 from Game2 import *
 from Game4 import *
 from hallway import *
+from Admin import *
 
 
 class Game:
@@ -30,6 +31,7 @@ class Game:
             self.game2 = Platformer()
             self.game3 = Maze()
             self.game4 = game4()
+            self.admin = admin()
 
             self.run()
 
@@ -38,7 +40,9 @@ class Game:
             for e in event.get():
                 if e.type == QUIT:
                     self.end = True
-                    
+            
+            admin = self.admin.checkAdmin()
+            
             if self.screen == 1:
                 if self.title.run() == True:
                     self.screen = 2
@@ -63,11 +67,12 @@ class Game:
                     self.screen = 6
             
             elif self.screen == 3:
-                val = self.game1.run()
+                val = self.game1.run(admin)
 
                 if val == "exit":
                     self.game1 = Aerial(self.user)
                     self.screen = 2
+
 
                 if val== "reset":
                      self.game1 = Aerial(self.user)
@@ -89,6 +94,9 @@ class Game:
             elif self.screen == 6:
                 if self.game4.run() == True:
                     self.screen = 2
+            
+            if admin[0] == True:
+                self.admin.run()
                 
             self.clock.tick(FPS)
             display.flip()

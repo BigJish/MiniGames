@@ -31,7 +31,7 @@ class Rocket(sprite.Sprite):
             return True
     
     
-    def update(self):
+    def update(self, admin):
         self.move()
     
 

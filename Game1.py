@@ -14,7 +14,7 @@ from Boom import *
 
 class Aerial:
     def __init__(self, user):
-        self.screen = display.get_surface()
+        self.win = display.get_surface()
         
         self.visible_sprites = sprite.Group()
         self.enemy_sprites = sprite.Group()
@@ -47,24 +47,24 @@ class Aerial:
         self.player = Player((200,300),self.visible_sprites)
         self.spawn = EnemySpawning()
     
-    def run(self):
+    def run(self, admin):
         if self.scrn_num == 1:
             if self.title.run() == True:
                 self.scrn_num = 2
             
         if self.scrn_num == 2:
             if self.dead == False:
-                self.screen.blit(self.bg_img,(0,0))
+                self.win.blit(self.bg_img,(0,0))
                 self.text.text_update(""+str(self.score))
 
-                val = self.spawn.spawn()
+                val = self.spawn.run()
                 if val == "spawn":
                     Enemy([self.visible_sprites, self.enemy_sprites, self.obstcale_sprites], self.rocket_sprites)
 
 
                 if self.player.shoot() == True:
-                    if self.key_held == False:
-                        if t() - self.rocket_cooldown >= 0.5:
+                    if self.key_held == False or admin[2] == 0:
+                        if t() - self.rocket_cooldown >= 0.5 * admin[2]:
                             self.rocket_cooldown = t()
                             self.key_held = True
                             Rocket(self.player.rect.center, [self.visible_sprites, self.rocket_sprites, self.obstcale_sprites], self.enemy_sprites)
@@ -92,6 +92,7 @@ class Aerial:
                             self.enemy_sprites.remove(i)
                             self.score += 1
                             self.explosions.append(Pow(i.rect.center, self.visible_sprites))
+
                     for j in self.rocket_sprites:
                         if j == i:
                             self.rocket_sprites.remove(i)
@@ -115,7 +116,13 @@ class Aerial:
                         self.dead = True
                         
                 for i in self.visible_sprites:
-                    i.update()
+                    i.update(admin)
+                    if admin[1] == True:
+                        try:
+                            draw.rect(self.win, (255,0,0), i.hitbox, 2)
+
+                        except:
+                            pass
 
                 if self.player.shoot() == False:
                     self.key_held = False

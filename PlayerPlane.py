@@ -11,6 +11,7 @@ class Player(sprite.Sprite):
 
         self.hitbox = self.rect.inflate(0, -36)
         self.rocket_count = 0
+        self.speedMod = 1
     
     def inputs(self):
         k = key.get_pressed()
@@ -19,16 +20,16 @@ class Player(sprite.Sprite):
         self.Y_change = 0
 
         if k[K_w]:
-            self.Y_change += -3
+            self.Y_change += -3*self.speedMod
 
         if k[K_s]:
-            self.Y_change += 3
+            self.Y_change += 3*self.speedMod
 
         if k[K_a]:
-            self.X_change += -2
+            self.X_change += -2*self.speedMod
 
         if k[K_d]:
-            self.X_change += 2
+            self.X_change += 2*self.speedMod
     
     def move(self):
         if self.rect.x+self.X_change <= 360 and self.rect.x+self.X_change >= 0:
@@ -39,7 +40,6 @@ class Player(sprite.Sprite):
 
         self.rect.center = self.hitbox.center
         self.win.blit(self.player_image,self.rect.topleft)
-        draw.rect(self.win, (200,80,20), self.hitbox, 2)
     
     def shoot(self):
         k = key.get_pressed()
@@ -52,7 +52,8 @@ class Player(sprite.Sprite):
             return True
         
     
-    def update(self):
+    def update(self, admin):
+        self.speedMod = admin[3]
         self.shoot()
         self.inputs()
         self.move()

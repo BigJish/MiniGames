@@ -31,8 +31,7 @@ class Enemy(sprite.Sprite):
             self.time = t()
             return True
             
-    def update(self):
+    def update(self, admin):
         self.win.blit(self.enemy_image,self.rect.topleft)
         self.hitbox = self.rect.inflate(0,-12)
-        draw.rect(self.win, (200,80,20), self.hitbox, 2)
         self.spawn(self.x, self.y)

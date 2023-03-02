@@ -20,5 +20,5 @@ class Pow(sprite.Sprite):
         if time() - self.t >= 1:
             return True
         
-    def update(self):
+    def update(self, admin):
         self.draw()
